@@ -40,9 +40,12 @@ fprintf('Running Task 2: fft(x,4) and fft(x,64)...\n');
 X4  = fft(x, 4);
 X64 = fft(x, 64);
 
-% Bin k sits at w_k = 2*pi*k/N. Move bins above pi to the range [-pi, pi).
-w4  = binFrequencies(4);
-w64 = binFrequencies(64);
+% Bin k sits at w_k = 2*pi*k/N. Move bins at or above pi down by 2*pi so
+% they line up with the DTFT plotted from -pi to pi.
+w4  = 2*pi*(0:3)/4;
+w4(w4 >= pi)  = w4(w4 >= pi) - 2*pi;
+w64 = 2*pi*(0:63)/64;
+w64(w64 >= pi) = w64(w64 >= pi) - 2*pi;
 
 fprintf('  |fft(x,4)| = [%s]\n', sprintf('%.2f ', abs(X4)));
 fprintf('  fft(x,64) bins with |X| < 1e-10: k = %s\n', mat2str(find(abs(X64) < 1e-10) - 1));
@@ -87,11 +90,3 @@ set(gca, 'XTick', ticks, 'XTickLabel', tickLabels);
 saveas(fig, fullfile(outDir, 'dtft-dft-comparison.png'));
 fprintf('Saved dtft-dft-comparison.png\n');
 
-%% =========================================================================
-% Local functions
-% =========================================================================
-function wk = binFrequencies(N)
-% Angular frequency of each DFT bin, mapped from [0, 2*pi) to [-pi, pi)
-    wk = 2*pi*(0:N-1)/N;
-    wk(wk >= pi) = wk(wk >= pi) - 2*pi;
-end

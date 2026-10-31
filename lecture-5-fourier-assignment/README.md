@@ -34,7 +34,7 @@ Each script is self-contained and saves its PNGs next to itself. From the reposi
 cd exercise-1 && matlab -batch "run('exercise1.m')"
 ```
 
-Do the same for `exercise-2` to `exercise-4`. No toolboxes are needed. Exercise 3 and Exercise 4 use local functions inside a script, which needs MATLAB R2016b or newer.
+Do the same for `exercise-2` to `exercise-4`. No toolboxes are needed.
 
 ---
 
