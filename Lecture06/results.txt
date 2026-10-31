@@ -1,0 +1,70 @@
+MATLAB version: 26.2.0.3433840 (R2026b) Update 1
+Signal Processing Toolbox: version 26.2, license available
+
+==================== PART A: Sensor signal ====================
+Running A1: Time-domain comparison...
+Running A2: Frequency responses...
+
+  Filter gain at the frequencies of interest
+  Freq (Hz) | FIR 1-pass | FIR filtfilt | IIR 1-pass | IIR filtfilt
+         5  |   -0.31 dB |    -0.62 dB  |   -0.00 dB |    -0.00 dB
+        12  |   -1.81 dB |    -3.63 dB  |   -0.07 dB |    -0.14 dB
+        50  |  -56.43 dB |  -112.86 dB  |  -32.08 dB |   -64.16 dB
+       137  |  -58.12 dB |  -116.25 dB  |  -69.05 dB |  -138.11 dB
+  Gain at 20 Hz: FIR -5.27 dB, IIR -3.01 dB (single pass)
+
+Running A3: Spectra...
+
+  Spectrum amplitude at the frequencies of interest (linear)
+  Freq (Hz) |  Clean  |  Noisy  |   FIR      |   IIR
+         5  |  1.0000 |  0.9991 |  9.303e-01 |  9.988e-01
+        12  |  0.3500 |  0.3497 |  2.298e-01 |  3.432e-01
+        50  |  0.0000 |  0.3458 |  4.158e-04 |  1.382e-03
+       137  |  0.0000 |  0.2047 |  1.278e-04 |  4.174e-04
+
+Running A4: RMSE...
+
+  RMSE against the clean signal
+  Signal       | Whole 0-2 s | Interior 0.1-1.9 s | Edges (first+last 0.1 s)
+  Noisy input  |   0.3801    |       0.3780       |   0.3990
+  FIR output   |   0.1056    |       0.1063       |   0.0989
+  IIR output   |   0.0548    |       0.0466       |   0.1023
+
+Running A5: Design comparison...
+  FIR: 61 coefficients (b), a = 1, order 60
+  IIR: 5 b + 5 a = 10 coefficients, order 4
+  Single-pass group delay at 5 / 12 Hz: FIR 30.0 / 30.0 samples, IIR 21.3 / 25.5 samples
+  (1 sample = 1 ms at 1000 Hz. filtfilt cancels this delay offline.)
+
+==================== PART B: Audio hum ====================
+Handel: Fs = 8192 Hz, 73113 samples, 8.92 s
+Normalized stop-band edges: narrow [0.01196 0.01245], wide [0.01099 0.01343] (must be < 1)
+Running B1: Audio waveforms...
+Running B2: Audio spectra...
+Running B3: Notch responses...
+
+Running B4: 50 Hz measurement...
+  Signal           | 50 Hz amp (whole) | 50 Hz amp (interior)
+  Clean original   |     0.00038       |     0.00034
+  Hum added        |     0.15020       |     0.15022
+  Narrow 49-51 Hz  |     0.00103       |     0.00005
+  Wide 45-55 Hz    |     0.00024       |     0.00002
+  Measured hum reduction (interior): narrow -69.4 dB, wide -77.7 dB
+  Filter response at 50 Hz: narrow -80.0 dB (filtfilt -160.0 dB), wide -52.0 dB (filtfilt -104.1 dB)
+
+  Clean music RMS: 0.1962
+  Music removed by narrow filter (RMS of filtered clean - clean): 0.00144 (-42.7 dB re music)
+  Music removed by wide filter:                                  0.00227 (-38.7 dB re music)
+  RMSE vs clean: hum added 0.10606, narrow 0.00526, wide 0.00332
+  Narrow filter error RMS: edges (first+last 0.5 s) 0.01514, rest 0.00150
+  Wide filter error RMS:   edges (first+last 0.5 s) 0.00786, rest 0.00215
+
+Running B5: Listening test, common gain 0.948 for all signals
+  Playing: Clean original
+  Playing: Hum added
+  Playing: Narrow 49-51 Hz
+  Playing: Wide 45-55 Hz
+  WAV files for listening saved to: /MATLAB Drive/audio
+
+Figures saved to: /MATLAB Drive/figures
+Numbers saved to: /MATLAB Drive/results.txt
