@@ -1,0 +1,2 @@
+event,start_s,end_s,duration_s,band_low_hz,band_high_hz,strongest_peak_hz
+dog bark,2.275,2.442,0.167,854,2287,854

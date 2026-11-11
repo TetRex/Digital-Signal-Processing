@@ -1,0 +1,3 @@
+window_samples,window_ms,bin_spacing_hz,event_start_s,event_end_s,event_duration_s,peaks_500_3000hz
+512,32.0,31.25,2.27,2.43,0.16,15
+2048,128.0,7.8125,2.24,2.45,0.21,63
