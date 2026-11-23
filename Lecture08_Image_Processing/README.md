@@ -78,3 +78,15 @@ All values are copied from [`results/metrics.csv`](results/metrics.csv). Mean |e
 ## Limitation
 
 **The comparison rests on one image, one noise realisation (`rng(42)`) and one setting per filter.** PSNR and SSIM need a clean reference, which a real noisy photo does not have, and neither metric fully matches what a viewer notices. PSNR in particular rewards smoothing of the large flat background even when the grain edges get softer.
+
+---
+
+## In-class exercises
+
+The six in-class exercises are a separate submission in [`exercises/`](exercises/):
+
+- `exercises/exercises.mlx`: the executed Live Script, one section per exercise, with outputs and short answers.
+- `exercises/exercises.pdf`: a PDF export of the executed Live Script.
+- [`exercises/exercises.m`](exercises/exercises.m): the plain-text source of the Live Script.
+
+The exercises use the toolbox sample images `cameraman.tif`, `pout.tif` and `coins.png`, which are not included. To run them, change the current folder to `exercises/` and follow the same Live Script steps as above with `exercises.m`. Answers that depend on measured values are printed by the script as lines starting with `Answer:`.
