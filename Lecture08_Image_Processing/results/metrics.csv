@@ -1,0 +1,5 @@
+Method,PSNR_dB,SSIM
+Degraded (no filter),18.09,0.3696
+Median 3x3,25.53,0.6276
+Gaussian sigma 1.5,25.75,0.6921
+Median 3x3 + Gaussian sigma 1,26.48,0.7083
