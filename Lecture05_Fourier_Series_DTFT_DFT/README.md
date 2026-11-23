@@ -1,4 +1,4 @@
-# Lecture 5: Fourier Series, DTFT and DFT
+# Lecture 05: Fourier Series, DTFT and DFT
 
 MATLAB exercises on how periodic signals are built from harmonics and how the DFT represents the frequencies of a sampled signal.
 
@@ -9,7 +9,7 @@ MATLAB exercises on how periodic signals are built from harmonics and how the DF
 ## Files
 
 ```
-lecture-5-fourier-assignment/
+Lecture05_Fourier_Series_DTFT_DFT/
 ├── README.md
 ├── exercise-1/
 │   ├── exercise1.m

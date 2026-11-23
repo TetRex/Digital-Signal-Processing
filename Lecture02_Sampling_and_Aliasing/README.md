@@ -1,4 +1,4 @@
-# Lecture 02 – Sampling and Aliasing
+# Lecture 02: Sampling and Aliasing
 
 ## Objective
 

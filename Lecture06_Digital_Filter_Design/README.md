@@ -28,7 +28,7 @@ All measured values in this report are copied from [`results.txt`](results.txt),
 | Signal Processing Toolbox | version 26.2, license available (required for `fir1`, `butter`, `freqz`, `filtfilt`, `grpdelay`) |
 
 ```bash
-cd Lecture06 && matlab -batch "run('Lecture06_digital_filters.m')"
+cd Lecture06_Digital_Filter_Design && matlab -batch "run('Lecture06_digital_filters.m')"
 ```
 
 At the end, the script plays the clean, hum-added and filtered audio at one common gain. It also writes the same four signals to `audio/*.wav`, so you can listen on another device if playback does not work in MATLAB, for example in MATLAB Online. `audio/` is git-ignored and is not part of the submission. The flags `playAudio` and `saveAudio` turn each option off.

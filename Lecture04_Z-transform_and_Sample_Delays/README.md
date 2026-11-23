@@ -1,4 +1,4 @@
-# Z-transform and Sample Delays
+# Lecture 04: Z-transform and Sample Delays
 
 This folder contains the MATLAB implementation and answers for the **Z-transform and Sample Delays** assignment. It covers how a finite signal maps to its Z-transform, how a one-sample delay appears as multiplication by $z^{-1}$, and how a simple two-tap FIR system is described by its transfer function $H(z)$.
 

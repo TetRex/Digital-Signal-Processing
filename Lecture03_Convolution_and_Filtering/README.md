@@ -1,4 +1,4 @@
-# README.md
+# Lecture 03: Convolution and Moving-Average Filtering
 
 ### 1. Which operation changed the signal amplitude?
 * **Scaling:** Multiplying the noise vector by 2 (`scaled = noise * 2`) doubled its amplitude.
