@@ -4,7 +4,9 @@
 %
 % One section per exercise: code, outputs and a short answer to the
 % "Think about" questions. Answers that depend on measured numbers are
-% printed by the code as lines starting with |Answer:|.
+% printed by the code as lines starting with |Answer:|. Figures use at
+% most three panels per row so that they stay readable inline in the
+% Live Script and in the PDF export.
 
 clear; close all; clc;
 fprintf('MATLAB %s\n', version);
@@ -19,8 +21,8 @@ fprintf('cameraman.tif: %d x %d pixels, class %s\n', size(I, 1), size(I, 2), cla
 % n-bit quantization: map 0..255 to L = 2^n levels, then back to 0..255
 % for display.
 bits = [8 4 2 1];
-figure('Position', [100 100 1200 330]);
-tiledlayout(1, numel(bits), 'TileSpacing', 'compact', 'Padding', 'compact');
+fig = figure; theme(fig, 'light');
+tiledlayout(2, 2, 'TileSpacing', 'compact', 'Padding', 'compact');
 for b = bits
     L = 2^b;
     Iq = uint8(floor(double(I) / (256 / L)) * (255 / (L - 1)));
@@ -35,11 +37,11 @@ Idec = I(1:8:end, 1:8:end);
 Ires = imresize(I, 1/8);
 fprintf('Downsampled size: %d x %d\n', size(Idec, 1), size(Idec, 2));
 
-figure('Position', [100 100 1000 360]);
+fig = figure; theme(fig, 'light');
 tiledlayout(1, 3, 'TileSpacing', 'compact', 'Padding', 'compact');
-nexttile; imshow(I); title('Original (256 x 256)');
-nexttile; imshow(imresize(Idec, 8, 'nearest')); title('I(1:8:end, 1:8:end), no filter');
-nexttile; imshow(imresize(Ires, 8, 'nearest')); title('imresize(I, 1/8), antialiased');
+nexttile; imshow(I); title(sprintf('Original\n256 x 256'));
+nexttile; imshow(imresize(Idec, 8, 'nearest')); title(sprintf('Every 8th pixel\n(no filter)'));
+nexttile; imshow(imresize(Ires, 8, 'nearest')); title(sprintf('imresize(I, 1/8)\n(antialiased)'));
 
 %%
 % *Answer.* At 4 bits the image looks almost normal apart from slight
@@ -69,13 +71,13 @@ Iblur = imfilter(I, hMotion, 'replicate');
 ramp = repmat(linspace(0.2, 1, size(I, 2)), size(I, 1), 1);
 Iramp = im2uint8(im2double(I) .* ramp);
 
-figure('Position', [100 100 1500 330]);
-tiledlayout(1, 5, 'TileSpacing', 'compact', 'Padding', 'compact');
+fig = figure; theme(fig, 'light');
+tiledlayout(2, 3, 'TileSpacing', 'compact', 'Padding', 'compact');
 nexttile; imshow(I); title('Original');
-nexttile; imshow(Ig); title('Gaussian noise, var 0.01');
-nexttile; imshow(Isp); title('Salt & pepper, density 0.05');
-nexttile; imshow(Iblur); title('Motion blur, 15 px at 30^\circ');
-nexttile; imshow(Iramp); title('Brightness ramp 0.2 \rightarrow 1');
+nexttile; imshow(Ig); title(sprintf('Gaussian noise\nvar 0.01'));
+nexttile; imshow(Isp); title(sprintf('Salt & pepper\ndensity 0.05'));
+nexttile; imshow(Iblur); title(sprintf('Motion blur\n15 px at 30^\\circ'));
+nexttile; imshow(Iramp); title(sprintf('Brightness ramp\n0.2 \\rightarrow 1'));
 
 %%
 % *Answer.* Gaussian noise is additive: a random value is added to every
@@ -103,18 +105,23 @@ Peq  = histeq(P);
 contrastImages = {P, Padj, Pg05, Pg2, Peq};
 contrastNames  = {'Original', 'imadjust', 'Gamma 0.5', 'Gamma 2', 'histeq'};
 
-figure('Position', [100 100 1500 620]);
-tiledlayout(2, 5, 'TileSpacing', 'compact', 'Padding', 'compact');
+fig = figure; theme(fig, 'light');
+tiledlayout(2, 3, 'TileSpacing', 'compact', 'Padding', 'compact');
 for k = 1:numel(contrastImages)
-    nexttile(k);
+    nexttile;
     imshow(contrastImages{k});
     title(contrastNames{k});
-    nexttile(k + 5);
+end
+
+fig = figure; theme(fig, 'light');
+tiledlayout(2, 3, 'TileSpacing', 'compact', 'Padding', 'compact');
+for k = 1:numel(contrastImages)
+    nexttile;
     [counts, levels] = imhist(contrastImages{k});
     bar(levels, counts, 1, 'FaceColor', [0 0.4470 0.7410], 'EdgeColor', 'none');
     xlim([0 255]); ylim([0 max(counts) * 1.05]);
-    xlabel('Grey level'); ylabel('Pixel count');
-    title(['Histogram: ' contrastNames{k}]);
+    xlabel('Grey level'); ylabel('Count');
+    title(contrastNames{k});
     grid on;
 end
 
@@ -123,13 +130,13 @@ patchRows = 101:140;
 patchCols = 101:140;
 patch = P(patchRows, patchCols);
 
-figure('Position', [100 100 1100 380]);
+fig = figure; theme(fig, 'light');
 tiledlayout(1, 3, 'TileSpacing', 'compact', 'Padding', 'compact');
 nexttile;
 imshow(P);
 rectangle('Position', [patchCols(1) - 0.5, patchRows(1) - 0.5, 40, 40], ...
     'EdgeColor', [0.8500 0.3250 0.0980], 'LineWidth', 1.5);
-title(sprintf('pout.tif, patch rows %d-%d, cols %d-%d', ...
+title(sprintf('Patch: rows %d-%d\ncols %d-%d', ...
     patchRows(1), patchRows(end), patchCols(1), patchCols(end)));
 nexttile; imshow(imresize(patch, 8, 'nearest')); title('Nearest, x8');
 nexttile; imshow(imresize(patch, 8, 'bicubic')); title('Bicubic, x8');
@@ -182,9 +189,9 @@ for j = 1:numel(noisyImages)
         noiseNames{j}, filterNames{best}, psnrDb(best + 1, j), psnrDb(best + 1, j) - psnrDb(1, j));
 end
 
-figure('Position', [100 100 1300 650]);
-tiledlayout(2, 4, 'TileSpacing', 'compact', 'Padding', 'compact');
 for j = 1:numel(noisyImages)
+    fig = figure; theme(fig, 'light');
+    tiledlayout(2, 2, 'TileSpacing', 'compact', 'Padding', 'compact');
     nexttile;
     imshow(noisyImages{j});
     title(sprintf('%s\n%.2f dB', noiseNames{j}, psnrDb(1, j)));
@@ -203,16 +210,16 @@ logF0 = log(1 + abs(F0));
 logFb = log(1 + abs(Fb));
 cRange = [0 max(logF0(:))];
 
-figure('Position', [100 100 1100 470]);
+fig = figure; theme(fig, 'light');
 tiledlayout(1, 2, 'TileSpacing', 'compact', 'Padding', 'compact');
 nexttile;
 imagesc(freq, freq, logF0, cRange); axis image; colormap(gca, parula);
-title('Spectrum: original');
-xlabel('Horizontal frequency (cycles/pixel)'); ylabel('Vertical frequency (cycles/pixel)');
+title(sprintf('Spectrum\noriginal'));
+xlabel('f_x (cycles/pixel)'); ylabel('f_y (cycles/pixel)');
 nexttile;
 imagesc(freq, freq, logFb, cRange); axis image; colormap(gca, parula);
-title('Spectrum: motion blur, 15 px at 30^\circ');
-xlabel('Horizontal frequency (cycles/pixel)'); ylabel('Vertical frequency (cycles/pixel)');
+title(sprintf('Spectrum, motion blur\n15 px at 30^\\circ'));
+xlabel('f_x (cycles/pixel)'); ylabel('f_y (cycles/pixel)');
 cb = colorbar;
 cb.Layout.Tile = 'east';
 cb.Label.String = 'log(1 + |F|)';
@@ -233,9 +240,9 @@ fprintf('Answer: energy above 0.25 cycles/pixel: original %.3f %%, blurred %.3f 
 % instead of removing it.
 %
 % Blurring removes high frequencies: the share of energy above 0.25
-% cycles/pixel drops from 0.783 % to 0.030 %. Motion blur averages along one direction only, so it
-% attenuates the frequencies along the 30-degree blur direction and keeps
-% those perpendicular to it. Its spectrum shows dark parallel lines (zeros
+% cycles/pixel drops from 0.783 % to 0.030 %. Motion blur averages along
+% one direction only, so it attenuates the frequencies along the 30-degree
+% blur direction and keeps those perpendicular to it. Its spectrum shows dark parallel lines (zeros
 % of the line kernel) that run perpendicular to the blur direction.
 
 %% Exercise 5: edges
@@ -252,9 +259,9 @@ for k = 1:numel(sigmas)
 end
 
 edgeMaps  = [{Esobel, Ecanny}, EcSigma];
-edgeNames = {'Sobel', 'Canny (default sigma)', 'Canny sigma 1', 'Canny sigma 2', 'Canny sigma 3'};
-figure('Position', [100 100 1500 330]);
-tiledlayout(1, numel(edgeMaps), 'TileSpacing', 'compact', 'Padding', 'compact');
+edgeNames = {'Sobel', 'Canny (default)', 'Canny sigma 1', 'Canny sigma 2', 'Canny sigma 3'};
+fig = figure; theme(fig, 'light');
+tiledlayout(2, 3, 'TileSpacing', 'compact', 'Padding', 'compact');
 for k = 1:numel(edgeMaps)
     nexttile;
     imshow(edgeMaps{k});
@@ -267,11 +274,11 @@ end
 EnRaw    = edge(Ig, 'canny');
 EnSmooth = edge(imgaussfilt(Ig, 2), 'canny');
 
-figure('Position', [100 100 1100 380]);
+fig = figure; theme(fig, 'light');
 tiledlayout(1, 3, 'TileSpacing', 'compact', 'Padding', 'compact');
 nexttile; imshow(Ecanny);   title(sprintf('Clean image\nnnz = %d', nnz(Ecanny)));
-nexttile; imshow(EnRaw);    title(sprintf('Noisy, no extra smoothing\nnnz = %d', nnz(EnRaw)));
-nexttile; imshow(EnSmooth); title(sprintf('Noisy, imgaussfilt sigma 2 first\nnnz = %d', nnz(EnSmooth)));
+nexttile; imshow(EnRaw);    title(sprintf('Noisy, Canny only\nnnz = %d', nnz(EnRaw)));
+nexttile; imshow(EnSmooth); title(sprintf('Noisy, smoothed first\nnnz = %d', nnz(EnSmooth)));
 
 removed = nnz(EnRaw) - nnz(EnSmooth);
 if removed >= 0
@@ -297,7 +304,7 @@ fprintf('Answer: smoothing changes the noisy edge count from %d to %d: %d edge p
 % the remaining edges follow real outlines.
 
 %% Exercise 6: segment and measure
-% Otsu threshold on |coins.png|, cleaning with |imopen|, |imfill| and
+% Otsu threshold on |coins.png|, cleaning with |imfill|, |imopen| and
 % |bwareaopen|, then labelling and measuring every coin.
 
 C = imread('coins.png');
@@ -335,14 +342,15 @@ disp(coinTable);
 [maxArea, largest] = max([stats.Area]);
 fprintf('Answer: %d coins labelled. Largest coin: #%d, area %d px.\n', nCoins, largest, maxArea);
 
-figure('Position', [100 100 1500 330]);
-tiledlayout(1, 5, 'TileSpacing', 'compact', 'Padding', 'compact');
+fig = figure; theme(fig, 'light');
+tiledlayout(2, 2, 'TileSpacing', 'compact', 'Padding', 'compact');
 for k = 1:numel(stages)
     nexttile;
     imshow(stages{k});
-    title(sprintf('%s\n%d objects, %d holes', stageNames{k}, objects(k), holes(k)));
+    title(sprintf('%s: %d objects, %d holes', stageNames{k}, objects(k), holes(k)));
 end
-nexttile;
+
+fig = figure; theme(fig, 'light');
 imshow(label2rgb(Lc, 'jet', 'k', 'shuffle'));
 hold on;
 for k = 1:nCoins
@@ -354,18 +362,22 @@ title(sprintf('Labelled coins (%d)', nCoins));
 
 %%
 % *Answer.* The table of stages shows what each step changed. The raw Otsu
-% mask has 15 objects and 31 holes. |imfill| fills the dark holes inside
-% the coins (darker coin details below the Otsu level). |imopen| removes
-% the small bright specks and thin spurs, which brings the count down to
-% the coins. |bwareaopen| removes any blob still smaller than 50 pixels.
+% mask has 15 objects and 31 holes: dark details on the coin faces fall
+% below the Otsu level, and one dim coin (#4, upper left) is only a thin
+% ring with 5 small bright specks inside it. |imfill| does almost all the work:
+% it fills all 31 holes, and the specks inside the ring become part of
+% the filled coin, so 15 objects become 10. |imopen| then only smooths
+% the outlines (2 pixels change), and |bwareaopen| finds nothing below
+% 50 pixels left to remove. Here it acts only as a safety net.
 %
-% The order matters. One dim coin (top centre) is only a thin ring after
-% Otsu. In a first run with |imopen| before |imfill|, the opening broke
-% that ring. The coin could then not be filled and was measured as a
-% 555-pixel fragment instead of a full coin.
+% The order matters. In a first run with |imopen| before |imfill|, the
+% opening broke the dim coin's ring. The coin could then not be filled and
+% was measured as a 555-pixel fragment instead of a full coin.
 %
-% The largest coin is the one named in the printed line and numbered in
-% the label image. Touching coins would merge into one label, because
+% The coins form two size groups: four small coins of 1810-1893 pixels
+% (about 48-49 px in diameter) and six large coins of 2510-2753 pixels
+% (about 57-59 px). The largest is coin #5 with 2753 pixels.
+% Touching coins would merge into one label, because
 % |bwlabel| only separates pixels that are not connected. In |coins.png|
 % the coins do not touch, so every coin gets its own label. Touching coins
 % would need a split, for example a distance transform and watershed.
