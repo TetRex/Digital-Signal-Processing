@@ -26,7 +26,7 @@ The image is `peppers.png`, a MATLAB sample image. It is not included in the rep
 ## How to run
 
 ```bash
-cd Lecture09/Lab1 && matlab -batch "run('Lecture09_lab1_image_2d_signal.m')"
+cd Lecture09_Image_Processing_Labs/Lab1 && matlab -batch "run('Lecture09_lab1_image_2d_signal.m')"
 ```
 
 In MATLAB Online, open the script, click **Run**, and download the PNG files from `figures/`.
