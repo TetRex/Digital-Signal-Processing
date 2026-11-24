@@ -16,7 +16,7 @@ A MATLAB script that detects metal studs on tires with image preprocessing and c
 | Toolbox | Image Processing Toolbox |
 
 ```bash
-cd Lecture11_Image_Signals_Preporocessing/Lab9 && /Applications/MATLAB_R2026b.app/bin/matlab -batch "run('tire_stud_detector.m')"
+cd Lecture11_Image_signals_Preporocessing/Lab9 && /Applications/MATLAB_R2026b.app/bin/matlab -batch "run('tire_stud_detector.m')"
 ```
 
 ## Result
