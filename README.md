@@ -28,6 +28,7 @@ Each lecture is a self-contained folder. It holds the code, the figures it produ
 | 09 | Image processing labs 1–6 | [Lecture09_Image_Processing_Labs](Lecture09_Image_Processing_Labs/) | one script per lab |
 | 10 | Traditional filters vs AI (labs 7–8) | [Lecture10_Traditional Filter_vs_AI_Filters](Lecture10_Traditional%20Filter_vs_AI_Filters/) | one script per lab |
 | 11 | Image preprocessing: tire stud detector (lab 9) | [Lecture11_Image_signals_Preporocessing](Lecture11_Image_signals_Preporocessing/) | `Lab9/tire_stud_detector.m` |
+| 12 | Low-light enhancement with a pretrained network (lab 10) | [Lecture12_Low_Light_Image_Enhancement](Lecture12_Low_Light_Image_Enhancement/) | `Lab10/Lecture12_lab10_low_light.m` |
 
 ### Labs
 
@@ -42,6 +43,7 @@ Each lecture is a self-contained folder. It holds the code, the figures it produ
 | 7 | Traditional filters vs a denoising CNN (DnCNN) | [Lecture10 / Lab7](Lecture10_Traditional%20Filter_vs_AI_Filters/Lab7/) |
 | 8 | Hybrid pipeline: K-means segmentation + SqueezeNet classification | [Lecture10 / Lab8](Lecture10_Traditional%20Filter_vs_AI_Filters/Lab8/) |
 | 9 | Tire stud detector: preprocessing and connected components | [Lecture11 / Lab9](Lecture11_Image_signals_Preporocessing/Lab9/) |
+| 10 | Learning to See in the Dark: pretrained low-light enhancement network | [Lecture12 / Lab10](Lecture12_Low_Light_Image_Enhancement/Lab10/) |
 
 [Certificates](Certificates/) holds the signal processing and image processing course certificates (PDF).
 
@@ -53,8 +55,9 @@ Each lecture is a self-contained folder. It holds the code, the figures it produ
 |---|---|
 | All MATLAB lectures | MATLAB R2026b (scripts written for R2026b; most also run on older releases) |
 | 06 | Signal Processing Toolbox |
-| 08–11 | Image Processing Toolbox |
+| 08–12 | Image Processing Toolbox |
 | 10 | Deep Learning Toolbox and the *Deep Learning Toolbox Model for SqueezeNet Network* add-on |
+| 12 | Deep Learning Toolbox (the pretrained low-light model, about 22 MB, is downloaded on the first run) |
 | 07 | Python 3.10–3.12 with NumPy, SciPy, Matplotlib, pandas, librosa and soundfile (exact versions in the lecture's README) |
 
 ## Running the code
@@ -75,6 +78,7 @@ The scripts contain no local functions, so they also run section by section or w
 - **MATLAB sample images** (`cameraman.tif`, `peppers.png`, `rice.png`, `pout.tif`, `coins.png`, `printedtext.png`, …) ship with MATLAB and the Image Processing Toolbox. They are referenced by filename and not stored in this repository.
 - **Lecture 07** keeps one ESC-50 audio clip (`1-100032-A-0.wav`, CC0) in its `data/` folder. The full course dataset is not included. Attribution is in that lecture's README.
 - **Lecture 11 / Lab 9** includes the two tire photos supplied with the assignment.
+- **Lecture 12 / Lab 10** includes the dark input photo supplied with the lab (`Example_03.png`) and its enhanced result. The pretrained model is not stored; the script downloads it to MATLAB's `tempdir`.
 
 ---
 
